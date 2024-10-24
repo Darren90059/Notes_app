@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+</head>
+<style>
+body{
+    background-color: #121212;
+    color: #242425;
+}
+.box, .input, .button {
+    background-color: #1e1e1e !important;
+    color: #ffffff !important;
+    border-color: #333;
+}
+.button.is-primary {
+    background-color: #344985 !important;
+}
+.button.is-danger {
+    background-color: #cf6679 !important;
+}
+.button:hover {
+    opacity: 0.9;
+}
+.title {
+    color: #344985 !important;
+}
+</style>
+    <section class="section">
+        <div class="container">
+            <h1 class="title has-text-centered">Notes</h1>
+
+            <div id="app" class="box">
+                <div class="field">
+                    <label class="label">Add Note</label>
+                    <div class="control">
+                        <input class="input" type="text" v-model="newNote" placeholder="Enter your note here">
+                    </div>
+                </div>
+
+
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary is-dark" @click="addNote">Add Note</button>
+                    </div>
+                </div>
+
+
+                <ul class="list">
+                    <li v-for="(note, index) in notes" :key="index" class="box">
+                        <span>{{ note }}</span>
+                        <button class="button is-danger is-dark is-small is-pulled-right" @click="deleteNote(index)">Delete</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    newNote: '',
+                    notes: []
+                };
+            },
+            methods: {
+                addNote() {
+                    if (this.newNote.trim()) {
+                        this.notes.push(this.newNote);
+                        this.newNote = ''; 
+                    }
+                },
+                deleteNote(index) {
+                    this.notes.splice(index, 1);
+                }
+            }
+        });
+
+
+        app.mount('#app');
+    </script>
+</body>
+</html>
